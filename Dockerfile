@@ -4,7 +4,8 @@
 FROM alpine:3.20 AS downloader
 ARG XRAY_VERSION=v26.10.31
 RUN apk add --no-cache curl unzip \
-    && curl -L -o /tmp/xray.zip "https://github.com/XTLS/Xray-core/releases/download/${XRAY_VERSION}/Xray-linux-64.zip" \
+    && (curl -fsSL -o /tmp/xray.zip "https://github.com/XTLS/Xray-core/releases/download/${XRAY_VERSION}/Xray-linux-64.zip" \
+        || curl -fsSL -o /tmp/xray.zip "https://gh-proxy.com/https://github.com/XTLS/Xray-core/releases/download/${XRAY_VERSION}/Xray-linux-64.zip") \
     && unzip /tmp/xray.zip -d /tmp/xray \
     && chmod +x /tmp/xray/xray
 
